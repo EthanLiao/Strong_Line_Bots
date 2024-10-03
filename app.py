@@ -39,7 +39,7 @@ def get_column(row, column):
 
         # Get all values in the specific column (e.g., 'A' or 'B')
         column_index = ord(column.upper()) - ord('A') + 1
-        
+
         # Get the value at the specified row and column
         cell_value = worksheet.cell(row, column_index).value
 
@@ -47,7 +47,7 @@ def get_column(row, column):
         # column_values = worksheet.col_values(column_index)
 
         # Return the column values as JSON
-        return cell_value
+        return column_values
 
     except Exception as e:
         return jsonify({"error": str(e)})
@@ -88,10 +88,8 @@ def handle_message(event):
         column_values = get_column(1,'B')
 
         # Join the values to send as a response
-        response_text = '\n'.join(column_values)
-
-        # Create a reply message
-        reply_message = TextSendMessage(text=response_text)
+        reply_message = TextSendMessage(text=f"Value in cell B1: {column_values}")
+        
         line_bot_api.reply_message(event.reply_token, reply_message)
     else:
         # Optionally handle other cases
