@@ -8,7 +8,7 @@ from linebot.models import MessageEvent, TextMessage, TextSendMessage
 # Google API related
 import gspread
 from google.oauth2.service_account import Credentials
-
+from google.oauth2 import service_account
 import os
 app = Flask(__name__)
 # ============= Google sheets related: Your Channel Access Token and Channel Secret from LINE Developers Console ============
