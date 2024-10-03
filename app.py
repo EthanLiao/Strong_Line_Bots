@@ -38,10 +38,11 @@ def get_column(column):
         worksheet = sheet.worksheet(SHEET_NAME)
 
         # Get all values in the specific column (e.g., 'A' or 'B')
-        column_values = worksheet.col_values(ord(column.upper()) - ord('A') + 1)
+        column_index = ord(column.upper()) - ord('A') + 1
+        column_values = worksheet.col_values(column_index)
 
         # Return the column values as JSON
-        return jsonify({"values": column_values})
+        return column_values
 
     except Exception as e:
         return jsonify({"error": str(e)})
