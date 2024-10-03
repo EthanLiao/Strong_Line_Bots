@@ -30,7 +30,7 @@ client = gspread.authorize(creds)
 def get_column(row, column):
     try:
         # Google Sheet ID and the name of the sheet tab
-        SHEET_ID = 'Strong_Grade'
+        SHEET_ID = '1oZ_lf6CKXgeVNizEfYxoCa6U0RPpzEIfwAklnMtEQWc'
         SHEET_NAME = 'Yun_Show'
 
         # Open the Google Sheet
@@ -89,7 +89,7 @@ def handle_message(event):
 
         # Join the values to send as a response
         reply_message = TextSendMessage(text=f"Value in cell B1: {column_values}")
-        
+
         line_bot_api.reply_message(event.reply_token, reply_message)
     else:
         # Optionally handle other cases
