@@ -13,7 +13,11 @@ import os
 app = Flask(__name__)
 # ============= Google sheets related: Your Channel Access Token and Channel Secret from LINE Developers Console ============
 # Path to your service account key file
-SERVICE_ACCOUNT_FILE = 'client_secret.json'
+# Get the absolute path to the current directory
+current_directory = os.path.dirname(os.path.abspath(__file__))
+
+# Specify the path to the service account JSON file
+SERVICE_ACCOUNT_FILE = os.path.join(current_directory, 'client_secret.json')
 # AIzaSyBEbVSAFsYg_RCFN8V2JAJSSn2IqLI66bY
 
 # Define the scope for accessing Google Sheets
