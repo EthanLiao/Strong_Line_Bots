@@ -23,9 +23,11 @@ SERVICE_ACCOUNT_FILE = os.path.join(current_directory, 'client_secret.json')
 SCOPES = ['https://www.googleapis.com/auth/spreadsheets.readonly']
 
 # Authorize and create a client for accessing Google Sheets
-creds = Credentials.from_service_account_file(SERVICE_ACCOUNT_FILE, scopes=SCOPES)
-client = gspread.authorize(creds)
-
+try:
+    creds = Credentials.from_service_account_file(SERVICE_ACCOUNT_FILE, scopes=SCOPES)
+    client = gspread.authorize(creds)
+except Exception as e:
+    raise Exception(f"Failed to authenticate with Google Sheets: {str(e)}")
 
 def get_specific_cell_value(row, column):
     try:
