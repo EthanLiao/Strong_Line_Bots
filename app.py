@@ -21,9 +21,6 @@ SCOPES = ['https://www.googleapis.com/auth/spreadsheets.readonly']
 # Authorize and create a client for accessing Google Sheets
 creds = Credentials.from_service_account_file(SERVICE_ACCOUNT_FILE, scopes=SCOPES)
 client = gspread.authorize(creds)
-# Authorize and create a client for accessing Google Sheets
-creds = Credentials.from_service_account_file(SERVICE_ACCOUNT_FILE, scopes=SCOPES)
-client = gspread.authorize(creds)
 
 @app.route('/get-column/<column>', methods=['GET'])
 def get_column(column):
