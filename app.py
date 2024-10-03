@@ -27,7 +27,7 @@ creds = Credentials.from_service_account_file(SERVICE_ACCOUNT_FILE, scopes=SCOPE
 client = gspread.authorize(creds)
 
 @app.route('/get-column/<column>', methods=['GET'])
-def get_column(column):
+def get_column(row, column):
     try:
         # Google Sheet ID and the name of the sheet tab
         SHEET_ID = 'Strong_Grade'
@@ -39,7 +39,12 @@ def get_column(column):
 
         # Get all values in the specific column (e.g., 'A' or 'B')
         column_index = ord(column.upper()) - ord('A') + 1
-        column_values = worksheet.col_values(column_index)
+        
+        # Get the value at the specified row and column
+        cell_value = worksheet.cell(row, column_index).value
+
+        # Get all value at the column
+        # column_values = worksheet.col_values(column_index)
 
         # Return the column values as JSON
         return column_values
@@ -80,7 +85,7 @@ def handle_message(event):
     # Check if the message is '1'
     if user_message == '1':
         # Get the values from column 'B'
-        column_values = get_column('B')
+        column_values = get_column(1,'B')
 
         # Join the values to send as a response
         response_text = '\n'.join(column_values)
