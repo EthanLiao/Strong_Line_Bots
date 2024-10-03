@@ -47,7 +47,7 @@ def get_column(row, column):
         # column_values = worksheet.col_values(column_index)
 
         # Return the column values as JSON
-        return column_values
+        return cell_value
 
     except Exception as e:
         return jsonify({"error": str(e)})
