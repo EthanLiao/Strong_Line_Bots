@@ -27,7 +27,7 @@ creds = Credentials.from_service_account_file(SERVICE_ACCOUNT_FILE, scopes=SCOPE
 client = gspread.authorize(creds)
 
 @app.route('/get-column/<column>', methods=['GET'])
-def get_column(row, column):
+def get_specific_cell_value(row, column):
     try:
         # Google Sheet ID and the name of the sheet tab
         SHEET_ID = '1oZ_lf6CKXgeVNizEfYxoCa6U0RPpzEIfwAklnMtEQWc'
@@ -85,11 +85,11 @@ def handle_message(event):
     # Check if the message is '1'
     if user_message == '1':
         # Get the values from column 'B'
-        column_values = get_column(1,'B')
+        column_values = get_specific_cell_value(1,'B')
 
         # Join the values to send as a response
         # reply_message = TextSendMessage(text=f"Value in cell B1: {column_values}")
-        reply_message = TextSendMessage(text=column_values)
+        reply_message = TextSendMessage(text=f"Value in cell B1: {column_values}")
         line_bot_api.reply_message(event.reply_token, reply_message)
     else:
         # Optionally handle other cases
