@@ -18,10 +18,10 @@ current_directory = os.path.dirname(os.path.abspath(__file__))
 
 # Specify the path to the service account JSON file
 SERVICE_ACCOUNT_FILE = os.path.join(current_directory, 'client_secret.json')
-# AIzaSyBEbVSAFsYg_RCFN8V2JAJSSn2IqLI66bY
 
 # Define the scope for accessing Google Sheets
 SCOPES = ['https://www.googleapis.com/auth/spreadsheets.readonly']
+
 # Authorize and create a client for accessing Google Sheets
 creds = Credentials.from_service_account_file(SERVICE_ACCOUNT_FILE, scopes=SCOPES)
 client = gspread.authorize(creds)
@@ -38,7 +38,7 @@ def get_column(column):
         worksheet = sheet.worksheet(SHEET_NAME)
 
         # Get all values in the specific column (e.g., 'A' or 'B')
-        column_values = worksheet.col_values(ord(column.upper()) - ord('B') + 1)
+        column_values = worksheet.col_values(ord(column.upper()) - ord('A') + 1)
 
         # Return the column values as JSON
         return jsonify({"values": column_values})
@@ -78,9 +78,14 @@ def handle_message(event):
 
     # Check if the message is '1'
     if user_message == '1':
-        # Reply the same message '1'
-        # reply_message = TextSendMessage(text=user_message)
-        reply_message = get_column();
+        # Get the values from column 'B'
+        column_values = get_column_values('B')
+
+        # Join the values to send as a response
+        response_text = '\n'.join(column_values)
+
+        # Create a reply message
+        reply_message = TextSendMessage(text=response_text)
         line_bot_api.reply_message(event.reply_token, reply_message)
     else:
         # Optionally handle other cases
