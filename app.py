@@ -79,7 +79,7 @@ def handle_message(event):
     # Check if the message is '1'
     if user_message == '1':
         # Get the values from column 'B'
-        column_values = get_column_values('B')
+        column_values = get_column('B')
 
         # Join the values to send as a response
         response_text = '\n'.join(column_values)
