@@ -50,7 +50,8 @@ def get_specific_cell_value(row, column):
         return cell_value
 
     except Exception as e:
-        return jsonify({"error": str(e)})
+        # return jsonify({"error": str(e)})
+        return f"Error: {str(e)}"
 
 
 
@@ -85,8 +86,8 @@ def handle_message(event):
     # Check if the message is '1'
     if user_message == '1':
         # Get the values from column 'B'
-        column_values = get_specific_cell_value(1, 'B')
-        reply_message = TextSendMessage(text=f"Value in cell B1: {column_values}")
+        cell_value = get_specific_cell_value(1, 'B')
+        reply_message = TextSendMessage(text=f"Value in cell B1: {cell_value}")
 
         line_bot_api.reply_message(event.reply_token, reply_message)
     else:
