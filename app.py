@@ -47,7 +47,7 @@ def get_specific_cell_value(row, column):
         # column_values = worksheet.col_values(column_index)
 
         # Return the column values as JSON
-        return column_values
+        return cell_value
 
     except Exception as e:
         return jsonify({"error": str(e)})
@@ -86,8 +86,6 @@ def handle_message(event):
     if user_message == '1':
         # Get the values from column 'B'
         column_values = get_specific_cell_value(1, 'B')
-
-
         reply_message = TextSendMessage(text=f"Value in cell B1: {column_values}")
 
         line_bot_api.reply_message(event.reply_token, reply_message)
