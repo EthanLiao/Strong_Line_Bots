@@ -9,17 +9,13 @@ from linebot.models import MessageEvent, TextMessage, TextSendMessage
 import gspread
 from google.oauth2.service_account import Credentials
 
-
-
-# AIzaSyBEbVSAFsYg_RCFN8V2JAJSSn2IqLI66bY
-
 import os
-
 app = Flask(__name__)
-
 # ============= Google sheets related: Your Channel Access Token and Channel Secret from LINE Developers Console ============
 # Path to your service account key file
-SERVICE_ACCOUNT_FILE = './client_secret.json'
+SERVICE_ACCOUNT_FILE = 'client_secret.json'
+# AIzaSyBEbVSAFsYg_RCFN8V2JAJSSn2IqLI66bY
+
 # Define the scope for accessing Google Sheets
 SCOPES = ['https://www.googleapis.com/auth/spreadsheets.readonly']
 # Authorize and create a client for accessing Google Sheets
@@ -28,8 +24,6 @@ client = gspread.authorize(creds)
 # Authorize and create a client for accessing Google Sheets
 creds = Credentials.from_service_account_file(SERVICE_ACCOUNT_FILE, scopes=SCOPES)
 client = gspread.authorize(creds)
-
-
 
 @app.route('/get-column/<column>', methods=['GET'])
 def get_column(column):
