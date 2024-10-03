@@ -88,8 +88,8 @@ def handle_message(event):
         column_values = get_column(1,'B')
 
         # Join the values to send as a response
-        reply_message = TextSendMessage(text=f"Value in cell B1: {column_values}")
-
+        # reply_message = TextSendMessage(text=f"Value in cell B1: {column_values}")
+        reply_message = TextSendMessage(text=column_values)
         line_bot_api.reply_message(event.reply_token, reply_message)
     else:
         # Optionally handle other cases
