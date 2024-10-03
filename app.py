@@ -12,22 +12,38 @@ from google.oauth2.service_account import Credentials
 import os
 app = Flask(__name__)
 # ============= Google sheets related: Your Channel Access Token and Channel Secret from LINE Developers Console ============
-# Path to your service account key file
-# Get the absolute path to the current directory
-current_directory = os.path.dirname(os.path.abspath(__file__))
+# # Path to your service account key file
+# # Get the absolute path to the current directory
+# current_directory = os.path.dirname(os.path.abspath(__file__))
+#
+# # Specify the path to the service account JSON file
+# SERVICE_ACCOUNT_FILE = os.path.join(current_directory, 'client_secret.json')
 
-# Specify the path to the service account JSON file
-SERVICE_ACCOUNT_FILE = os.path.join(current_directory, 'client_secret.json')
+# # Define the scope for accessing Google Sheets
+# SCOPES = ['https://www.googleapis.com/auth/spreadsheets.readonly']
+#
+# # Authorize and create a client for accessing Google Sheets
+# try:
+#     creds = Credentials.from_service_account_file(SERVICE_ACCOUNT_FILE, scopes=SCOPES)
+#     client = gspread.authorize(creds)
+# except Exception as e:
+#     raise Exception(f"Failed to authenticate with Google Sheets: {str(e)}")
 
+google_credentials_json = os.getenv("GOOGLE_CREDENTIALS")
+
+if not google_credentials_json:
+    raise Exception("The GOOGLE_CREDENTIALS environment variable is not set.")
+# Convert the JSON string to a dictionary
+google_credentials_dict = json.loads(google_credentials_json)
 # Define the scope for accessing Google Sheets
 SCOPES = ['https://www.googleapis.com/auth/spreadsheets.readonly']
-
 # Authorize and create a client for accessing Google Sheets
 try:
-    creds = Credentials.from_service_account_file(SERVICE_ACCOUNT_FILE, scopes=SCOPES)
+    creds = service_account.Credentials.from_service_account_info(google_credentials_dict, scopes=SCOPES)
     client = gspread.authorize(creds)
 except Exception as e:
     raise Exception(f"Failed to authenticate with Google Sheets: {str(e)}")
+
 
 def get_specific_cell_value(row, column):
     try:
